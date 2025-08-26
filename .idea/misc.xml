@@ -12,6 +12,7 @@
         <option value="$PROJECT_DIR$/notificationservice/pom.xml" />
         <option value="$PROJECT_DIR$/propertyservice/pom.xml" />
         <option value="$PROJECT_DIR$/ServiceRegistry/pom.xml" />
+        <option value="$PROJECT_DIR$/paymentservice/pom.xml" />
       </list>
     </option>
   </component>

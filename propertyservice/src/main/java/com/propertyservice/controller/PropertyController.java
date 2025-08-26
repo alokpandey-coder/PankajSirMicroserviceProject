@@ -1,18 +1,16 @@
 package com.propertyservice.controller;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
+import com.propertyservice.repository.RoomAvailabilityRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,9 +27,11 @@ import com.propertyservice.service.PropertyService;
 public class PropertyController {
 	
 	private PropertyService propertyService;
+    private RoomAvailabilityRepository roomAvailabilityRepository;
 	
-	public PropertyController(PropertyService propertyService) {
+	public PropertyController(PropertyService propertyService,RoomAvailabilityRepository roomAvailabilityRepository) {
 		this.propertyService=propertyService;
+        this.roomAvailabilityRepository=roomAvailabilityRepository;
 	}
 	
 	@PostMapping(
@@ -105,4 +105,28 @@ public class PropertyController {
 	    response.setData(room);
 	    return response;
 	}
+
+    //Update Room Count
+
+    @PutMapping("/updateRoomCount")
+    public APIResponse<Boolean> updateRoomCount(@RequestParam long id, @RequestParam LocalDate date){
+        APIResponse<Boolean> response = new APIResponse<>();
+
+        RoomAvailability roomsAvailable =roomAvailabilityRepository.getRooms(id,date);
+
+        int totalAvailableRooms = roomsAvailable.getAvailableCount();
+        if(totalAvailableRooms>0) {
+            roomsAvailable.setAvailableCount(totalAvailableRooms - 1);
+            roomAvailabilityRepository.save(roomsAvailable);
+            response.setMessage("Updated");
+            response.setStatus(200);
+            response.setData(true);
+            return response;
+        }else{
+            response.setMessage("Rooms are Not Available :!!!!!");
+            response.setStatus(500);
+            response.setData(false);
+            return response;
+        }
+    }
 }

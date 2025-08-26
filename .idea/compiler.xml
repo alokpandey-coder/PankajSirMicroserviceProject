@@ -13,6 +13,7 @@
         <module name="microservice-1" />
         <module name="ServiceRegistry" />
         <module name="propertyservice" />
+        <module name="paymentservice" />
         <module name="notificationservice" />
       </profile>
     </annotationProcessing>
@@ -26,6 +27,7 @@
       <module name="bookingservice" options="-parameters" />
       <module name="microservice-1" options="-parameters" />
       <module name="notificationservice" options="-parameters" />
+      <module name="paymentservice" options="-parameters" />
       <module name="propertyservice" options="-parameters" />
     </option>
   </component>

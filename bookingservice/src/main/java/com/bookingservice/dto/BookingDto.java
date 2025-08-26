@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class BookingDto {
-
+// Note : If error occurred remove private long roomAvailabilityId;
     private long propertyId;
     private long roomId;
     private long roomAvailabilityId;
